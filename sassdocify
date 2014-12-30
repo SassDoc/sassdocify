@@ -1,0 +1,105 @@
+#!/bin/sh -e
+
+# Functions {{{
+# =============
+
+err() {
+    echo "$@" >&2
+    exit 1
+}
+
+p() {
+    echo ➜ "$@"
+    "$@"
+}
+
+# }}}
+
+# Help, version, options {{{
+# ==========================
+
+readonly VERSION=0.1.0
+
+help() {
+    man "$(readlink -f "$0").1"
+}
+
+version() {
+    echo "sassdocify $VERSION"
+    echo "This software is public domain, see <http://unlicense.org/>."
+}
+
+# Default options.
+MSG='Update documentation'
+
+# Parse options and arguments.
+while [ $# != 0 ]; do
+    case $1 in
+        -h|--help) help; exit ;;
+        -V|--version) version; exit ;;
+        -m|--message) shift; MSG=$1; shift ;;
+        -*) err "Unknown option: $1" ;;
+        *) SRC="$1"; shift ;;
+    esac
+done
+
+readonly MSG
+
+# }}}
+
+# Source {{{
+# ==========
+
+# First argument, or CWD (as absolute path).
+readonly SRC=$(readlink -f "${SRC:-$PWD}")
+
+# Get the root Git directory.
+if ! root=$(git rev-parse --show-toplevel 2> /dev/null); then
+    err 'Not in a Git repository.'
+fi
+
+cd "$root"
+unset root
+
+if ! find "$SRC" -type f -name '*.s[ac]ss' | grep -q .; then
+    err 'No documentable file found in source directory.'
+fi
+
+# }}}
+
+# SassDoc executable {{{
+# ======================
+
+# Can be defined from environment.
+SASSDOC=${SASSDOC:-sassdoc}
+
+# }}}
+
+# Branch before switching to `gh-pages`.
+readonly BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+# Compile documentation.
+p $SASSDOC -f "$SRC" .sassdoc
+
+# Checkout `gh-pages`, create if needed.
+if git branch | grep -q gh-pages; then
+    p git checkout gh-pages
+else
+    p git checkout --orphan gh-pages
+fi
+
+# Remove everything.
+p git rm -rf --ignore-unmatch . || :
+
+# Copy everything from documentation into current directory and track.
+for file in $(cd .sassdoc && echo ./*); do
+    p cp -R ".sassdoc/$file" .
+    p git add "$file"
+done
+
+# Commit if files were modified or added.
+if git status --porcelain | grep -q '^[AM]'; then
+    p git commit -m "$MSG"
+fi
+
+p git checkout "$BRANCH"
