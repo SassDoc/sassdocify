@@ -21,7 +21,6 @@ OPTIONS
        -V, --version
               Show version.
 
-
        -m MSG, --message=MSG
               Show version.
 
