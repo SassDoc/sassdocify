@@ -7,7 +7,7 @@ MAN = man/man1/$(PROGRAM).1
 export RONN_MANUAL = SassDoc Manual
 export RONN_ORGANIZATION != $(BIN) --version | head -1
 
-all: man
+all: man README
 
 man: $(MAN) $(MAN).html
 
@@ -21,6 +21,9 @@ pages: $(MAN).html
 	git -C $@ commit -am 'Update man page'
 	git -C $@ remote set-url origin "$$(git config --get remote.origin.url)"
 	git -C $@ push
+
+README: $(MAN)
+	MANWIDTH=80 man $(MAN) | cat -s > $@
 
 .SUFFIXES: .ronn
 .ronn:
