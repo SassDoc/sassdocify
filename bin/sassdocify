@@ -18,15 +18,15 @@ p() {
 # Help, version, options {{{
 # ==========================
 
-readonly VERSION=0.1.0
+readonly VERSION=0.1.1
 
 help() {
-    man "$(readlink -f "$0").1"
+    man "$(basename "$0")"
 }
 
 version() {
     echo "sassdocify $VERSION"
-    echo "This software is public domain, see <http://unlicense.org/>."
+    echo 'This software is public domain, see <http://unlicense.org/>.'
 }
 
 # Default options.

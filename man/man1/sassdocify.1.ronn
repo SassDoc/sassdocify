@@ -1,0 +1,70 @@
+sassdocify(1) -- make a SassDoc branch
+======================================
+
+## SYNOPSIS
+
+`sassdocify` [<options>] [<src>]
+
+## DESCRIPTION
+
+**sassdocify** creates a *gh-pages* branch in the current `git`(1)
+repository, and documentizes the <src> directory within it.
+
+If <src> is not given, it's set to the current directory.
+
+## OPTIONS
+
+* `-h`, `--help`:
+  Show help.
+
+* `-V`, `--version`:
+  Show version.
+
+* `-m` <msg>, `--message`=<msg>:
+  Set the `git-commit`(1) message.
+
+## INSTALLATION
+
+Systemwide installation:
+
+    # make install
+
+User installation, assuming you have *~/.local/bin* in your `PATH`:
+
+    $ make install PREFIX=~/.local
+
+Development installation (set `sassdocify`'s *bin* directory directly in
+your `PATH`):
+
+    $ export PATH="$PWD/bin:$PATH"
+
+Or more persistent version (need logout):
+
+    $ echo "export PATH='$PWD/bin:\$PATH'" >> ~/.profile
+
+## EXAMPLES
+
+Document current directory in a *gh-pages* branch of the current
+repository.
+
+    $ sassdocify
+
+Use custom SassDoc options:
+
+    $ SASSDOC='sassdoc --verbose' sassdocify
+
+Give the source directory:
+
+    $ sassdocify stylesheets
+
+Custom `git`(1) commit message:
+
+    $ sassdocify -m 'New SassDoc theme'
+
+## COPYRIGHT
+
+This software is public domain, see <http://unlicense.org/>.
+
+## SEE ALSO
+
+`git`(1), <http://sassdoc.com/>
