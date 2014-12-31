@@ -6,11 +6,23 @@ MAN = man/man1/$(PROGRAM).1
 
 all: man
 
-man: $(MAN)
+man: $(MAN) $(MAN).html
+
+pages: $(MAN).html
+	rm -rf $@
+	git clone -b gh-pages . $@
+	cp $< $@/index.html
+	cd $@
+	git commit -am 'Update man page'
+	git push
 
 .SUFFIXES: .ronn
 .ronn:
 	ronn --warnings --roff $<
+
+.SUFFIXES: .html
+.ronn.html:
+	ronn --warnings --html --style toc $<
 
 install: all
 	install -m 755 -d $(DESTDIR)$(PREFIX)/bin
