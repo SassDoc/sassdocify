@@ -4,6 +4,9 @@ PROGRAM = sassdocify
 BIN = bin/$(PROGRAM)
 MAN = man/man1/$(PROGRAM).1
 
+export RONN_MANUAL = SassDoc Manual
+export RONN_ORGANIZATION != $(BIN) --version | head -1
+
 all: man
 
 man: $(MAN) $(MAN).html
