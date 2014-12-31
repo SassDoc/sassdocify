@@ -8,6 +8,9 @@ all: man
 
 man: $(MAN) $(MAN).html
 
+clean:
+	rm -f $(MAN) $(MAN).html
+
 pages: $(MAN).html
 	rm -rf $@
 	git clone -b gh-pages . $@
