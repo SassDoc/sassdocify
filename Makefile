@@ -18,9 +18,9 @@ pages: $(MAN).html
 	rm -rf $@
 	git clone -b gh-pages . $@
 	cp $< $@/index.html
-	cd $@
-	git commit -am 'Update man page'
-	git push
+	git -C $@ commit -am 'Update man page'
+	git -C $@ remote set-url origin "$$(git config --get remote.origin.url)"
+	git -C $@ push
 
 .SUFFIXES: .ronn
 .ronn:
