@@ -1,4 +1,4 @@
-SASSDOCIFY(1)                                                                                                          SASSDOCIFY(1)
+SASSDOCIFY(1)                                                    SASSDOCIFY(1)
 
 
 
@@ -9,7 +9,8 @@ SYNOPSIS
        sassdocify [options] [src]
 
 DESCRIPTION
-       sassdocify creates a gh-pages branch in the current git(1) repository, and documentize the src directory within it.
+       sassdocify  creates a gh-pages branch in the current git(1) repository,
+       and documentize the src directory within it.
 
        If src is not given, it's set to the current directory.
 
@@ -28,4 +29,4 @@ SEE ALSO
 
 
 
-                                                                                                                       SASSDOCIFY(1)
+                                                                 SASSDOCIFY(1)

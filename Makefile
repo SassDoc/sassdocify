@@ -1,2 +1,2 @@
 README: sassdocify.1
-	COLUMNS=80 man ./$< > $@
+	MANWIDTH=80 man ./$< > $@
