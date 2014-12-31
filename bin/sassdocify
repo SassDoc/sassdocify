@@ -75,31 +75,46 @@ SASSDOC=${SASSDOC:-sassdoc}
 
 # }}}
 
-# Branch before switching to `gh-pages`.
-readonly BRANCH=$(git rev-parse --abbrev-ref HEAD)
+# Push URL.
+readonly PUSH=$(git config --get remote.origin.url)
+
+p rm -rf .pages
+
+if ! git branch | grep -q gh-pages; then
+    readonly FIRST=1
+
+    # Make `gh-pages` branch.
+    p git clone . .pages
+    p git -C .pages checkout --orphan gh-pages
+    p git -C .pages remote set-url origin "$PUSH"
+else
+    # Clone existing branch
+    p git clone -b gh-pages . .pages
+fi
+
+# Remove everything.
+p git -C .pages rm -rf --ignore-unmatch . || :
 
 # Compile documentation.
 p $SASSDOC -f "$SRC" .sassdoc
 
-# Checkout `gh-pages`, create if needed.
-if git branch | grep -q gh-pages; then
-    p git checkout gh-pages
-else
-    p git checkout --orphan gh-pages
-fi
-
-# Remove everything.
-p git rm -rf --ignore-unmatch . || :
-
-# Copy everything from documentation into current directory and track.
+# Copy everything from documentation into pages directory and track.
 for file in $(cd .sassdoc && echo ./*); do
-    p cp -R ".sassdoc/$file" .
-    p git add "$file"
+    p cp -R ".sassdoc/$file" .pages
+    p git -C .pages add "$file"
 done
 
 # Commit if files were modified or added.
-if git status --porcelain | grep -q '^[AM]'; then
-    p git commit -m "$MSG"
+if git -C .pages status --porcelain | grep -q '^[AM]'; then
+    p git -C .pages commit -m "$MSG"
 fi
 
-p git checkout "$BRANCH"
+echo
+echo 'Documentation is ready in `.pages` directory!'
+echo
+
+if [ "$FIRST" ]; then
+    echo '    cd .pages && git push -u origin gh-pages'
+else
+    echo '    cd .pages && git push'
+fi
