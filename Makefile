@@ -6,6 +6,8 @@ PROGRAM = sassdocify
 BIN = bin/$(PROGRAM)
 MAN = man/man1/$(PROGRAM).1
 
+RONN = ronn --warnings
+
 export RONN_MANUAL = SassDoc Manual
 export RONN_ORGANIZATION = $(PROGRAM) $(VERSION)
 
@@ -34,11 +36,11 @@ README: $(MAN)
 
 .SUFFIXES: .ronn
 .ronn:
-	ronn --warnings --roff $<
+	$(RONN) --roff $<
 
 .SUFFIXES: .html
 .ronn.html:
-	ronn --warnings --html --style toc $<
+	$(RONN) --html --style toc $<
 
 install: all
 	install -m 755 -d $(DESTDIR)$(PREFIX)/bin
