@@ -18,7 +18,7 @@ p() {
 # Help, version, options {{{
 # ==========================
 
-readonly VERSION=0.2.1
+readonly VERSION=0.2.2
 
 help() {
     man "$(basename "$0")"
