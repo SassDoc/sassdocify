@@ -1,3 +1,5 @@
+VERSION = 0.2.1
+
 PREFIX = /usr/local
 PROGRAM = sassdocify
 
@@ -5,7 +7,7 @@ BIN = bin/$(PROGRAM)
 MAN = man/man1/$(PROGRAM).1
 
 export RONN_MANUAL = SassDoc Manual
-export RONN_ORGANIZATION != $(BIN) --version | head -1
+export RONN_ORGANIZATION = $(PROGRAM) $(VERSION)
 
 all: man README
 
@@ -21,6 +23,11 @@ pages: $(MAN).html
 	git -C $@ commit -am 'Update man page'
 	git -C $@ remote set-url origin "$$(git config --get remote.origin.url)"
 	git -C $@ push
+
+version:
+	sed -i 's/VERSION=.*/VERSION=$(VERSION)/' $(BIN)
+	sed -i 's/"version": .*/"version": "$(VERSION)",/' package.json
+	$(MAKE) clean all
 
 README: $(MAN)
 	MANWIDTH=80 man $(MAN) | cat -s > $@
