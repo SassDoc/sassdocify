@@ -21,9 +21,10 @@ clean:
 pages: $(MAN).html
 	rm -rf $@
 	git clone -b gh-pages . $@
+	git -C $@ remote set-url origin "$$(git config --get remote.origin.url)"
+	git -C $@ pull
 	cp $< $@/index.html
 	git -C $@ commit -am 'Update man page'
-	git -C $@ remote set-url origin "$$(git config --get remote.origin.url)"
 	git -C $@ push
 
 version:
