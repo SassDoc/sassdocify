@@ -6,7 +6,7 @@ PROGRAM = sassdocify
 BIN = bin/$(PROGRAM)
 MAN = man/man1/$(PROGRAM).1
 
-RONN = ronn --warnings
+RONN = bundle exec ronn --warnings
 
 export RONN_MANUAL = SassDoc Manual
 export RONN_ORGANIZATION = $(PROGRAM) $(VERSION)
