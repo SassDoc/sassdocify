@@ -7,7 +7,7 @@ sassdocify(1) -- make a SassDoc branch
 
 ## DESCRIPTION
 
-**sassdocify** creates a *gh-pages* branch in the current `git`(1)
+`sassdocify` creates a *gh-pages* branch in the current `git`(1)
 repository, and documentizes the <src> directory within it.
 
 If <src> is not given, it's set to the current directory.
@@ -33,12 +33,12 @@ Systemwide installation:
 
     # make install
 
-User installation, assuming you have *~/.local/bin* in your `PATH`:
+User installation, assuming you have *~/.local/bin* in your <PATH>:
 
     $ make install PREFIX=~/.local
 
 Development installation (set `sassdocify`'s *bin* directory directly in
-your `PATH`):
+your <PATH>):
 
     $ export PATH="$PWD/bin:$PATH"
 
