@@ -13,6 +13,11 @@
 
   "author": "SassDoc team",
 
+  "files": [
+    "bin/sassdocify",
+    "man/man1/sassdocify.1"
+  ],
+
   "directories": {
     "bin": "bin",
     "man": "man"
