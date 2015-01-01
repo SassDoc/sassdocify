@@ -25,6 +25,10 @@ If <src> is not given, it's set to the current directory.
 
 ## INSTALLATION
 
+With `npm`(1):
+
+    $ npm install -g sassdocify
+
 Systemwide installation:
 
     # make install
