@@ -96,7 +96,11 @@ fi
 p git -C .pages rm -rf --ignore-unmatch . || :
 
 # Compile documentation.
-p $SASSDOC -f "$SRC" .sassdoc
+if $SASSDOC --version | grep -s '^1\.'; then
+    p $SASSDOC "$SRC" .sassdoc
+else
+    p $SASSDOC "$SRC" --dest .sassdoc
+fi
 
 # Copy everything from documentation into pages directory and track.
 for file in $(cd .sassdoc && echo ./*); do
