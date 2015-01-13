@@ -13,6 +13,10 @@ p() {
     "$@"
 }
 
+resolve() {
+    echo "$(cd "$(dirname "$1")"; pwd)/$(basename "$1")"
+}
+
 # }}}
 
 # Help, version, options {{{
@@ -51,7 +55,7 @@ readonly MSG
 # ==========
 
 # First argument, or CWD (as absolute path).
-readonly SRC=$(readlink -f "${SRC:-$PWD}")
+readonly SRC=$(resolve "${SRC:-$PWD}")
 
 # Get the root Git directory.
 if ! root=$(git rev-parse --show-toplevel 2> /dev/null); then
