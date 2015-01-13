@@ -17,6 +17,11 @@ resolve() {
     echo "$(cd "$(dirname "$1")"; pwd)/$(basename "$1")"
 }
 
+gitc() {
+    dir=$1; shift
+    (cd "$dir" && git "$@")
+}
+
 # }}}
 
 # Help, version, options {{{
@@ -89,15 +94,15 @@ if ! git branch | grep -q gh-pages; then
 
     # Make `gh-pages` branch.
     p git clone . .pages
-    p git -C .pages checkout --orphan gh-pages
-    p git -C .pages remote set-url origin "$PUSH"
+    p gitc .pages checkout --orphan gh-pages
+    p gitc .pages remote set-url origin "$PUSH"
 else
     # Clone existing branch
     p git clone -b gh-pages . .pages
 fi
 
 # Remove everything.
-p git -C .pages rm -rf --ignore-unmatch . || :
+p gitc .pages rm -rf --ignore-unmatch . || :
 
 # Compile documentation.
 if $SASSDOC --version | grep -s '^1\.'; then
@@ -109,12 +114,12 @@ fi
 # Copy everything from documentation into pages directory and track.
 for file in $(cd .sassdoc && echo ./*); do
     p cp -R ".sassdoc/$file" .pages
-    p git -C .pages add "$file"
+    p gitc .pages add "$file"
 done
 
 # Commit if files were modified or added.
 if git -C .pages status --porcelain | grep -q '^[AM]'; then
-    p git -C .pages commit -m "$MSG"
+    p gitc .pages commit -m "$MSG"
 fi
 
 echo
