@@ -29,14 +29,6 @@ With `npm`(1):
 
     $ npm install -g sassdocify
 
-Systemwide installation:
-
-    # make install
-
-User installation, assuming you have *~/.local/bin* in your <PATH>:
-
-    $ make install PREFIX=~/.local
-
 Development installation (set `sassdocify`'s *bin* directory directly in
 your <PATH>):
 
