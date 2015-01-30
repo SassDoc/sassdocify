@@ -27,7 +27,7 @@ gitc() {
 # Help, version, options {{{
 # ==========================
 
-readonly VERSION=0.3.2
+readonly VERSION=0.3.3
 
 help() {
     man "$(basename "$0")"
