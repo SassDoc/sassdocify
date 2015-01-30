@@ -11,29 +11,17 @@ RONN = bundle exec ronn --warnings
 export RONN_MANUAL = SassDoc Manual
 export RONN_ORGANIZATION = $(PROGRAM) $(VERSION)
 
-all: man README
+all: man
 
 man: $(MAN) $(MAN).html
 
 clean:
 	rm -f $(MAN) $(MAN).html
 
-pages: $(MAN).html
-	rm -rf $@
-	git clone -b gh-pages . $@
-	git -C $@ remote set-url origin "$$(git config --get remote.origin.url)"
-	git -C $@ pull
-	cp $< $@/index.html
-	git -C $@ commit -am 'Update man page'
-	git -C $@ push
-
 version:
 	sed -i 's/VERSION=.*/VERSION=$(VERSION)/' $(BIN)
 	sed -i 's/"version": .*/"version": "$(VERSION)",/' package.json
 	$(MAKE) clean all
-
-README: $(MAN)
-	MANWIDTH=80 man $(MAN) | cat -s > $@
 
 .SUFFIXES: .ronn
 .ronn:
