@@ -23,21 +23,6 @@ If <src> is not given, it's set to the current directory.
 * `-m` <msg>, `--message`=<msg>:
   Set the `git-commit`(1) message.
 
-## INSTALLATION
-
-With `npm`(1):
-
-    $ npm install -g sassdocify
-
-Development installation (set `sassdocify`'s *bin* directory directly in
-your <PATH>):
-
-    $ export PATH="$PWD/bin:$PATH"
-
-Or more persistent version (need logout):
-
-    $ echo "export PATH='$PWD/bin:\$PATH'" >> ~/.profile
-
 ## EXAMPLES
 
 Document current directory in a *gh-pages* branch of the current
