@@ -6,10 +6,7 @@
   "homepage": "https://github.com/SassDoc/sassdocify",
   "bugs": "https://github.com/SassDoc/sassdocify/issues",
 
-  "license": {
-    "type": "Unlicense",
-    "url": "http://unlicense.org/"
-  },
+  "license": "Unlicense",
 
   "author": "SassDoc team",
 
