@@ -1,25 +1,19 @@
 {
   "name": "sassdocify",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Make a SassDoc branch.",
-
   "homepage": "https://github.com/SassDoc/sassdocify",
   "bugs": "https://github.com/SassDoc/sassdocify/issues",
-
   "license": "Unlicense",
-
   "author": "SassDoc team",
-
   "files": [
     "bin/sassdocify",
     "man/man1/sassdocify.1"
   ],
-
   "directories": {
     "bin": "bin",
     "man": "man"
   },
-
   "repository": {
     "type": "git",
     "url": "https://github.com/SassDoc/sassdocify.git"
