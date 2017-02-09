@@ -1,6 +1,8 @@
 SassDocify
 ==========
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/SassDoc/sassdocify.svg)](https://greenkeeper.io/)
+
 > Make a SassDoc branch.
 
 Description
